@@ -11,6 +11,7 @@ const common_1 = require("@nestjs/common");
 const auth_module_1 = require("./auth/auth.module");
 const user_module_1 = require("./user/user.module");
 const bookmark_module_1 = require("./bookmark/bookmark.module");
+const prisma_module_1 = require("./prisma/prisma.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -19,7 +20,8 @@ exports.AppModule = AppModule = __decorate([
         imports: [
             auth_module_1.AuthModule,
             user_module_1.UserModule,
-            bookmark_module_1.BookmarkModule
+            bookmark_module_1.BookmarkModule,
+            prisma_module_1.PrismaModule
         ],
     })
 ], AppModule);
