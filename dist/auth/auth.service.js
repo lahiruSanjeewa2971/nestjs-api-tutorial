@@ -14,10 +14,16 @@ const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
 const argon = require("argon2");
 const library_1 = require("@prisma/client/runtime/library");
+const jwt_1 = require("@nestjs/jwt");
+const config_1 = require("@nestjs/config");
 let AuthService = class AuthService {
     prisma;
-    constructor(prisma) {
+    jwt;
+    config;
+    constructor(prisma, jwt, config) {
         this.prisma = prisma;
+        this.jwt = jwt;
+        this.config = config;
     }
     async signup(dto) {
         const hashPassword = await argon.hash(dto.password);
@@ -71,7 +77,12 @@ let AuthService = class AuthService {
                     updatedAt: true,
                 },
             });
-            return safeUser;
+            const token = await this.signToken(user.id, user.email);
+            const response = {
+                data: safeUser,
+                token: token,
+            };
+            return response;
         }
         catch (error) {
             console.error('Sign-in error:', error);
@@ -81,10 +92,24 @@ let AuthService = class AuthService {
             throw new common_1.ForbiddenException('Something went wrong during sign-in.');
         }
     }
+    async signToken(userId, email) {
+        const payload = {
+            sub: userId,
+            email,
+        };
+        console.log('JWT_SECRET:', this.config.get('JWT_SECRET'));
+        const secret = this.config.get('JWT_SECRET');
+        return this.jwt.signAsync(payload, {
+            expiresIn: '30m',
+            secret: secret,
+        });
+    }
 };
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService,
+        jwt_1.JwtService,
+        config_1.ConfigService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map
