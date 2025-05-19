@@ -92,7 +92,7 @@ let AuthService = class AuthService {
             throw new common_1.ForbiddenException('Something went wrong during sign-in.');
         }
     }
-    async signToken(userId, email) {
+    signToken(userId, email) {
         const payload = {
             sub: userId,
             email,

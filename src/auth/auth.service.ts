@@ -84,6 +84,7 @@ export class AuthService {
       });
 
       const token = await this.signToken(user.id, user.email)
+      // const token = this.signToken(user.id, user.email)
 
       const response = {
         data: safeUser,
@@ -105,7 +106,7 @@ export class AuthService {
     }
   }
 
-  async signToken(userId: number, email: string): Promise<string> {
+  signToken(userId: number, email: string): Promise<string> {
     const payload = {
       sub: userId,
       email,
