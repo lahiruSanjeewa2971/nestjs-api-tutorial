@@ -33,12 +33,7 @@ let AuthService = class AuthService {
                     email: dto.email,
                     hash: hashPassword,
                     firstName: dto.firstName,
-                },
-                select: {
-                    id: true,
-                    email: true,
-                    firstName: true,
-                    createdAt: true,
+                    role: dto.role
                 },
             });
             return newUser;

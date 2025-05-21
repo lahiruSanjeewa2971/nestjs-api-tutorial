@@ -12,6 +12,10 @@ export class AuthDto {
   @IsString()
   @IsNotEmpty()
   firstName: string;
+
+  @IsString()
+  @IsNotEmpty()
+  role: string;
 }
 export class LoginDto {
   @IsEmail()

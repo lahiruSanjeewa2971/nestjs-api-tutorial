@@ -1,5 +1,5 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import {} from '@prisma/client';
+import { Role } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { AuthDto, LoginDto } from './dto';
 import * as argon from 'argon2';
@@ -27,14 +27,15 @@ export class AuthService {
           email: dto.email,
           hash: hashPassword,
           firstName: dto.firstName,
+          role: dto.role as Role
         },
         // control what's going to go within the API response
-        select: {
-          id: true,
-          email: true,
-          firstName: true,
-          createdAt: true,
-        },
+        // select: {
+        //   id: true,
+        //   email: true,
+        //   firstName: true,
+        //   createdAt: true,
+        // },
       });
 
       // return the saved user

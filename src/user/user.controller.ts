@@ -4,7 +4,7 @@ import { Request } from 'express';
 import { GetUser } from 'src/auth/decorator';
 import { JwtGuard } from 'src/auth/guard';
 
-@UseGuards(JwtGuard) //adding this to here, means that every API route under this, should have token
+@UseGuards(JwtGuard) //adding this to here, means that every API route under this, (should have a token)
 @Controller('users')
 export class UserController {
   @Get('me')

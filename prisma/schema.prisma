@@ -1,3 +1,8 @@
+enum Role {
+  user
+  admin
+}
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,6 +19,8 @@ model User {
 
   email String @unique
   hash  String
+
+  role Role @default(user)
 
   firstName String
   lastName  String?
