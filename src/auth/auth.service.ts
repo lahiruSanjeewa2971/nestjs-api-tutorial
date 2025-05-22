@@ -84,7 +84,7 @@ export class AuthService {
         },
       });
 
-      const token = await this.signToken(user.id, user.email)
+      const token = await this.signToken(user.id, user.email, user.role)
       // const token = this.signToken(user.id, user.email)
 
       const response = {
@@ -107,10 +107,11 @@ export class AuthService {
     }
   }
 
-  signToken(userId: number, email: string): Promise<string> {
+  signToken(userId: number, email: string, role: Role): Promise<string> {
     const payload = {
       sub: userId,
       email,
+      role
     };
 
     console.log('JWT_SECRET:', this.config.get('JWT_SECRET'));

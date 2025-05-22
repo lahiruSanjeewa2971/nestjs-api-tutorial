@@ -72,7 +72,7 @@ let AuthService = class AuthService {
                     updatedAt: true,
                 },
             });
-            const token = await this.signToken(user.id, user.email);
+            const token = await this.signToken(user.id, user.email, user.role);
             const response = {
                 data: safeUser,
                 token: token,
@@ -87,10 +87,11 @@ let AuthService = class AuthService {
             throw new common_1.ForbiddenException('Something went wrong during sign-in.');
         }
     }
-    signToken(userId, email) {
+    signToken(userId, email, role) {
         const payload = {
             sub: userId,
             email,
+            role
         };
         console.log('JWT_SECRET:', this.config.get('JWT_SECRET'));
         const secret = this.config.get('JWT_SECRET');
